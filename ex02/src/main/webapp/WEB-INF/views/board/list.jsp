@@ -17,7 +17,8 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            Board List Page
+                            <button id='regBtn' class="btn btn-xs float-sm-right">Register New Board</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -35,7 +36,7 @@
                                     	<c:forEach items="${list }" var="board">
                                     		<tr>
                                     			<td><c:out value="${board.bno}" /></td>
-                                    			<td><c:out value="${board.title}" /></td>
+                                    			<td><a href='/board/get?bno=<c:out value="${board.bno }" />'><c:out value="${board.title}" /></a></td>
                                     			<td><c:out value="${board.writer}" /></td>
                                     			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }" /></td>
                                     			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></td>
@@ -76,6 +77,10 @@
                             				$("#myModal").modal("show");
                             				
                             			}
+                            			
+                            			$("#regBtn").on("click", function(){
+                            				self.location ="/board/register";
+                            			});
                             		});
                             	</script>
                             </div>
