@@ -29,9 +29,9 @@
 					<div class="form-group">
 						<label>Writer</label> <input class="form-control" name='writer'>
 					</div>
-					<button type="submit" class="btn btn-default">Submit
+					<button type="submit" class="btn btn-Primary">Submit
 						Button</button>
-					<button type="reset" class="btn btn-default">Reset Button</button>
+					<button type="reset" class="btn btn-Light">Reset Button</button>
 				</form>
 			</div>
 		</div>

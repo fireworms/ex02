@@ -17,8 +17,8 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            Board List Page
-                            <button id='regBtn' class="btn btn-xs float-sm-right">Register New Board</button>
+                            <span>Board List Page</span>
+                            <button id='regBtn' class="btn btn-sm btn-primary float-sm-right">Register New Board</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -36,7 +36,7 @@
                                     	<c:forEach items="${list }" var="board">
                                     		<tr>
                                     			<td><c:out value="${board.bno}" /></td>
-                                    			<td><a href='/board/get?bno=<c:out value="${board.bno }" />'><c:out value="${board.title}" /></a></td>
+                                    			<td><a  class='move' href='<c:out value="${board.bno }" />'><c:out value="${board.title}" /></a></td>
                                     			<td><c:out value="${board.writer}" /></td>
                                     			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }" /></td>
                                     			<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></td>
@@ -44,6 +44,26 @@
                                     	</c:forEach>
                                     </tbody>
                                 </table>
+                                <div class='float-sm-right'>
+                                <form id='actionForm' action="/board/list" method='get'>
+                                	<input type='hidden' name='pageNum' value ='${pageMaker.cri.pageNum }'>
+                                	<input type='hidden' name='amount' value ='${pageMaker.cri.amount }'>
+                                	<ul class="pagination">
+		                                <c:if test="${pageMaker.prev }">
+		                                <li class="page-item"><a class="page-link" href="${pageMaker.startPage -1 }">Previous</a>
+		                                </li>
+		                                </c:if>
+		                                
+		                                <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+		                                <li class="page-item ${pageMaker.cri.pageNum == num ? "active" : "" }"><a class="page-link" href="${num }">${num }</a></li>
+		                                </c:forEach>
+		                                
+		                                <c:if test="${pageMaker.next }">
+		                                <li class="page-item"><a class="page-link" href="${pageMaker.endPage +1 }">Next</a></li>
+		                                </c:if>
+                                	</ul>
+                                </form>
+                                </div>
                                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 	<div class="modal-dialog">
                                 		<div class="modal-content">
@@ -82,6 +102,22 @@
                             			
                             			$("#regBtn").on("click", function(){
                             				self.location ="/board/register";
+                            			});
+                            			
+                            			var actionForm = $("#actionForm");
+                            			
+                            			$(".page-item a").on("click", function(e){
+                            				e.preventDefault();
+                            				console.log('click');
+                            				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+                            				actionForm.submit();
+                            			});
+                            			
+                            			$(".move").on("click", function(e){
+											e.preventDefault();
+											actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+											actionForm.attr("action", "/board/get");
+											actionForm.submit();
                             			});
                             		});
                             	</script>
