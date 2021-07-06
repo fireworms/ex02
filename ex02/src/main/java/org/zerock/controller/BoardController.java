@@ -1,5 +1,10 @@
 package org.zerock.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.BoardAttachVO;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
@@ -49,7 +56,18 @@ public class BoardController {
 	
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
-		log.info("register : " + board);
+
+		log.info("========================");
+		
+		log.info("register: " + board);
+		
+		if(board.getAttachList() != null) {
+			board.getAttachList().forEach(attach -> log.info(attach));
+		}else {
+			log.info("AttachList is null");
+		}
+		
+		log.info("========================");
 		
 		service.register(board);
 		
@@ -66,13 +84,6 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-		/*rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		rttr.addAttribute("type", cri.getType());
-		rttr.addAttribute("keyword", cri.getKeyword());
-		*/
-		
-		
 		return "redirect:/board/list" + cri.getListlink();
 	}
 	
@@ -84,10 +95,16 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		
-		/*
-		*/
-		
 		return "redirect:/board/list" + cri.getListlink();
+	}
+	
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno){
+		
+		log.info("getAttachList" + bno);
+		
+		return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
 	}
 	
 }
