@@ -80,7 +80,7 @@
 	}
 	
 	.bigPictureWrapper{
-		position: absoulte;
+		position: absolute;
 		display: none;
 		justify-content: center;
 		align-items:center;
@@ -180,6 +180,40 @@
 </div>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script>
+
+$(".uploadResult").on("click","li",function(e){
+	
+	console.log("view image");
+	
+	var liObj = $(this);
+	//console.log(this);
+	var path = encodeURIComponent(liObj.data("path")+"/"+liObj.data("uuid")+"_"+liObj.data("filename"));
+	
+	if(liObj.data("type")){
+		showImage(path.replace(new RegExp(/\\/g),"/"));
+		//console.log("image");
+	}else{
+		self.location = "/download?fileName="+path;
+		//console.log("not image");
+	}
+});
+
+function showImage(fileCallPath){
+	
+	alert(fileCallPath);
+	
+	$(".bigPictureWrapper").css("display","flex").show();
+	
+	$(".bigPicture").html("<img src='/display?fileName="+fileCallPath+"'>").animate({width:'100%',height:'100%'},1000);
+}
+
+$(".bigPictureWrapper").on("click",function(e){
+	
+	$(".bigPicture").animate({width:'0%', height:'0%'}, 1000);
+	setTimeout(function(){$('.bigPictureWrapper').hide();}, 1000);
+});
+
+	
 $(document).ready(function(){
 	
 	(function(){
@@ -196,13 +230,13 @@ $(document).ready(function(){
 				if(attach.fileType){
 					var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName);
 					
-					str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type'" + attach.fileType + "'><div>";
+					str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "'><div>";
 					str += "<img src='/display?fileName=" + fileCallPath + "'>";
 					str += "</div>";
 					str += "</li>";
 				}else{
 					
-					str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type'" + attach.fileType + "'><div>";
+					str += "<li data-path='" + attach.uploadPath + "' data-uuid='" + attach.uuid + "' data-filename='" + attach.fileName + "' data-type='" + attach.fileType + "'><div>";
 					str += "<span> " + attach.fileName + "</span><br>";
 					str += "<img src='/resources/img/attach.png'>";
 					str += "</div>";
@@ -393,7 +427,7 @@ $(document).ready(function(){
 		pageNum = targetPageNum;
 		
 		showList(pageNum);
-	})
+	});
 	
 });
 </script>
