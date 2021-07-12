@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
 
 <div class="row">
@@ -31,7 +32,12 @@
 				<div class="form-group">
 					<label>Writer</label> <input class="form-control" name='writer' value='<c:out value="${board.writer }" />' readonly="readonly">
 				</div>
-				<button data-oper='modify' class="btn btn-Light" >Modify</button>
+				<sec:authentication property="principal" var="pinfo"/>
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq board.writer }">
+							<button data-oper='modify' class="btn btn-Light" >Modify</button>
+						</c:if>
+					</sec:authorize>
 				<button data-oper='list' class="btn btn-info" >List</button>
 				
 				<form id='operForm' action="/board/modify" method="get">
@@ -126,7 +132,9 @@
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
 				<i class="fa fa-comments fa-fw"></i><span class="m-0 font-weight-bold text-primary"> Reply</span>
+				<sec:authorize access="isAuthenticated()">
 				<button id='addReplyBtn' class='btn btn-primary float-sm-right'>New Reply</button>
+				</sec:authorize>
 			</div>
 			<div class="card-body">
 				<ul class="list-group chat">

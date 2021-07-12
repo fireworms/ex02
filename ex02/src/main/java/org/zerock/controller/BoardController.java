@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -50,6 +51,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()")
 	public void register() {
 		
 	}
@@ -62,6 +64,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
+	@PreAuthorize("isAuthenticated()")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 
 		log.info("========================");
@@ -69,7 +72,9 @@ public class BoardController {
 		log.info("register: " + board);
 		
 		if(board.getAttachList() != null) {
+			
 			board.getAttachList().forEach(attach -> log.info(attach));
+			
 		}else {
 			log.info("AttachList is null");
 		}
@@ -83,6 +88,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	@PreAuthorize("principal.username == #board.writer")
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify : " + board);
@@ -95,8 +101,9 @@ public class BoardController {
 	}
 	
 	@Transactional
+	@PreAuthorize("principal.username == #writer")
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
 		log.info("remove......." + bno);
 		
 		List<BoardAttachVO> attachList = service.getAttachList(bno);
