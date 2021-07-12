@@ -53,8 +53,9 @@ public class FileCheckTask {
 		
 		fileListPaths.forEach(p -> log.warn(p));
 		
+		//여기서 전날의 첨부파일들이 들어있는 폴더명을 구함
 		File targetDir = Paths.get("C:\\upload", getFolderYesterDay()).toFile();
-		
+		// 여기서 데이터베이스에서 가져온 객체를 List<Path> 형식으로 변환한 경로데이터와 targetDir.listFiles메소드로 반환한 
 		File[] removeFiles = targetDir.listFiles(file -> fileListPaths.contains(file.toPath()) == false);
 		
 		log.warn("----------------------------------------");
