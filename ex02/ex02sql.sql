@@ -117,3 +117,4 @@ token varchar2(64) not null,
 last_used timestamp not null
 );
 
+select * from TBL_BOARD; 

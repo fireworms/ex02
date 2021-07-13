@@ -351,14 +351,33 @@ $(document).ready(function(){
 	var modalRemoveBtn = $("#modalRemoveBtn");
 	var modalRegisterBtn = $("#modalRegisterBtn");
 	
+	var replyer = null;
+	
+	<sec:authorize access="isAuthenticated()">
+	
+	replyer = '<sec:authentication property="principal.username"/>';
+	
+	</sec:authorize>
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
 	$("#addReplyBtn").on("click", function(e){
+		
 		modal.find("input").val("");
+		modal.find("input[name='replyer']").val(replyer).attr('readonly', true);
 		modalInputReplyDate.closest("div").hide();
 		modal.find("button[id !='modalCloseBtn']").hide();
 		
 		modalRegisterBtn.show();
 		
 		$(".modal").modal("show");
+	});
+	
+	$(document).ajaxSend(function(e, xhr, options){
+		
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		
 	});
 	
 	modalRegisterBtn.on("click", function(e){
@@ -402,7 +421,25 @@ $(document).ready(function(){
 	
 	modalModBtn.on("click", function(e){
 
-		var reply = {rno:modal.data("rno"), reply:modalInputReply.val()};
+		var originalReplyer = modalInputReplyer.val();
+		
+		var reply = {rno:modal.data("rno"), reply:modalInputReply.val(), replyer:originalReplyer};
+		
+		if(!replyer){
+			alert("로그인후 수정이 가능합니다.");
+			modal.modal("hide");
+		}
+		
+		console.log("Original Replyer: " + originalReplyer);
+		
+		if(replyer != originalReplyer){
+			
+			alert("자신이 작성한 댓글만 수정이 가능합니다");
+			modal.modal("hide");
+			return;
+			
+		}
+		
 		replyService.update(reply, function(result){
 			
 			alert(result);
@@ -415,7 +452,24 @@ $(document).ready(function(){
 		
 		var rno = modal.data("rno");
 		
-		replyService.remove(rno, function(result){
+		if(!replyer){
+			alert("로그인후 삭제가 가능합니다.");
+			modal.modal("hide");
+		}
+		
+		var originalReplyer = modalInputReplyer.val();
+		
+		console.log("Original Replyer: " + originalReplyer);
+		
+		if(replyer != originalReplyer){
+			
+			alert("자신이 작성한 댓글만 삭제가 가능합니다");
+			modal.modal("hide");
+			return;
+			
+		}
+		
+		replyService.remove(rno, originalReplyer, function(result){
 			
 			alert(result);
 			modal.modal("hide");

@@ -241,6 +241,9 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 			return true;
 		}
 		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
 		$("input[type='file']").change(function(e){
 			
 			var formData = new FormData();
@@ -269,6 +272,9 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 		        contentType: false,
 		        processData: false,
 		        cache: false,
+		        beforeSend: function(xhr){
+		        	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		        },
 				success: function(result){
 					console.log(result);
 					showUploadResult(result);

@@ -199,6 +199,9 @@
 			return true;
 		}
 		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
 		$("input[type='file']").change(function(e){
 			
 			var formData = new FormData();
@@ -206,8 +209,6 @@
 			var inputFile = $("input[name='uploadFile']");
 			
 			var files = inputFile[0].files;
-			
-			console.log(files);
 			
 			for(var i = 0; i < files.length; i++){
 				
@@ -217,8 +218,6 @@
 				formData.append("uploadFile", files[i]);
 			}
 			
-			console.log(formData);
-			
 			$.ajax({
 				url: "/uploadAjaxAction",
 		        type: "POST",
@@ -227,6 +226,9 @@
 		        contentType: false,
 		        processData: false,
 		        cache: false,
+		        beforeSend: function(xhr){
+		        	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		        },
 				success: function(result){
 					console.log(result);
 					showUploadResult(result);
@@ -236,6 +238,9 @@
 	});
 	
 	$(".uploadResult").on("click", "button", function(e){
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		
 		console.log("delete file");
 		
@@ -249,6 +254,9 @@
 			data: {fileName: targetFile, type:type},
 			dataType: 'text',
 			type: 'POST',
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success: function(result){
 				alert(result);
 				targetLi.remove();

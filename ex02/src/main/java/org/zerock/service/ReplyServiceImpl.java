@@ -27,6 +27,8 @@ public class ReplyServiceImpl implements ReplyService{
 		
 		log.info("register...." + vo);
 		
+		boardMapper.updateReplyCnt(vo.getBno(), 1);
+		
 		return mapper.insert(vo);
 	}
 
