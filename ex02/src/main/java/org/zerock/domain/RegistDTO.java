@@ -6,15 +6,10 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class MemberVO {
+public class RegistDTO {
 
 	private String userid;
 	private String userpw;
 	private String username;
 	private String email;
-	private boolean enabled;
-	
-	private Date regDate;
-	private Date updateDate;
-	private List<AuthVO> authList;
 }

@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>SB Admin 2 - Regist</title>
 
     <!-- Custom fonts for this template-->
     <link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,32 +43,31 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" role="form" method='post' action='/login'>
+                                    <form class="user" role="form" method="post" action="/registUser">
                                     	<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }" />
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                name="username" aria-describedby="emailHelp"
+                                                name="userid" aria-describedby="emailHelp"
                                                 placeholder="Enter User ID...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                name="password" placeholder="Password">
+                                            <input type="text" class="form-control form-control-user"
+                                                name="userpw" placeholder="Password">
                                         </div>
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" name="remember-me">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
+                                            <input type="text" class="form-control form-control-user"
+                                                name="username"
+                                                placeholder="Enter User ID...">
                                         </div>
-                                        <a href="#" class="btn btn-primary btn-user btn-block btn-login">
-                                            Login
-                                        </a>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user"
+                                                name="email" placeholder="Enter User EMAIL...">
+                                        </div>
+                                        <button class="btn btn-primary btn-user btn-block btn-regist">
+                                            Regist
+                                        </button>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="/registMember">Create an Account!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -92,12 +91,7 @@
     <script src="/resources/js/sb-admin-2.min.js"></script>
 
 	<script>
-		$(".btn-login").on("click", function(e){
-			
-			e.preventDefault();
-			$("form").submit();
-			
-		});
+	
 	</script>
 </body>
 </html>

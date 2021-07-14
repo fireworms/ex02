@@ -8,7 +8,8 @@
 		<id property="userid" column="userid"/>
 		<result property="userid" column="userid"/>
 		<result property="userpw" column="userpw"/>
-		<result property="userName" column="username"/>
+		<result property="username" column="username"/>
+		<result property="email" column="email"/>
 		<result property="regDate" column="regdate"/>
 		<result property="updateDate" column="updatedate"/>
 		<collection property="authList" resultMap="authMap">
@@ -21,9 +22,19 @@
 	</resultMap>
 	
 	<select id="read" resultMap="memberMap">
-		SELECT mem.userid, userpw, username, enabled, regdate, updatedate, auth
+		SELECT mem.userid, userpw, username, email, enabled, regdate, updatedate, auth
 		from tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.userid = auth.userid
 		WHERE mem.userid = #{userid}
 	</select>
+	
+	<insert id="regist">
+		INSERT into tbl_member (userid, userpw, username, email)
+		values(#{userid}, #{userpw}, #{username}, #{email})
+	</insert>
+	
+	<insert id="registAuth">
+		INSERT into tbl_member_auth (userid, auth)
+		values(#{userid}, 'ROLE_USER')
+	</insert>
 	
 </mapper>

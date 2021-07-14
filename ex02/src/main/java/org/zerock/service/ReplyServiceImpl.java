@@ -77,13 +77,13 @@ public class ReplyServiceImpl implements ReplyService{
 				mapper.getListWithPaging(cri, bno));
 	}
 
-	@Override
+	/*@Override
 	public int removeAll(Long bno) {
 		
 		log.info("remove All reply from selected atricle");
 		
 		return mapper.deleteByBno(bno);
-	}
+	}*/
 	
 	
 	

@@ -30,7 +30,10 @@ create sequence seq_reply;
 
 alter table tbl_reply add constraint pk_reply primary key (rno);
 
-alter table tbl_reply add constraint fk_reply_board foreign key (bno) references tbl_board (bno);
+alter table tbl_reply add constraint fk_reply_board foreign key (bno) references tbl_board (bno) on delete cascade;
+
+alter table tbl_reply drop constraint fk_reply_board;
+
 select * from tbl_reply order by rno desc;
 
 create index idx_reply on tbl_reply (bno desc, rno asc);
@@ -96,6 +99,7 @@ create table tbl_member(
 	userid varchar2(50) not null primary key,
 	userpw varchar2(100) not null,
 	username varchar2(100) not null,
+	email varchar2(100) not null unique,
 	regdate date default sysdate,
 	updatedate date default sysdate,
 	enabled char(1) default '1'
@@ -103,11 +107,13 @@ create table tbl_member(
 
 create table tbl_member_auth(
 	userid varchar2(50) not null,
-	auth varchar2(50) not null,
-	constraint fk_member_auth foreign key(userid) references tbl_member(userid)
+	auth varchar2(50) not null
 );
 
+alter table tbl_member_auth add constraint fk_member_auth foreign key (userid) references tbl_member(userid) on delete cascade;
+
 select * from tbl_member;
+delete from tbl_member;
 select * from tbl_member_auth;
 
 create table persistent_logins(
@@ -117,4 +123,14 @@ token varchar2(64) not null,
 last_used timestamp not null
 );
 
-select * from TBL_BOARD; 
+select * from TBL_BOARD;
+
+select * from TBL_reply ;
+
+select * from all_constraints where table_name = 'TBL_MEMBER_AUTH';
+
+alter table tbl_member_auth drop constraint fk_member_auth;
+
+insert into tbl_member(userid, userpw, username, email) values('ad90', 'ad90', 'ad90', 'fireworms0@gmail.com');
+
+insert into tbl_member_auth(userid, auth) values('ad90', 'ROLE_ADMIN');

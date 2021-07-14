@@ -36,7 +36,6 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	
 	private BoardService service;
-	private ReplyService rService;
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
@@ -108,7 +107,7 @@ public class BoardController {
 		
 		List<BoardAttachVO> attachList = service.getAttachList(bno);
 		
-		rService.removeAll(bno);
+		//rService.removeAll(bno);
 		
 		if(service.remove(bno)) {
 			

@@ -168,8 +168,6 @@
 			$(".uploadResult ul li").each(function(i, obj){
 				
 				var jobj = $(obj);
-				//console.log(obj.getAttribute('data-filename'));
-				//console.log(jobj.data('filename'));
 				console.dir(jobj);
 				
 				str += "<input type='hidden' name='attachList[" + i + "].fileName' value='" + jobj.data('filename') + "'>";
