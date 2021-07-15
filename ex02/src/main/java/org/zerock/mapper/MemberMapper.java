@@ -1,6 +1,7 @@
 package org.zerock.mapper;
 
 import org.zerock.domain.MemberVO;
+import org.zerock.domain.RegistCheckVO;
 import org.zerock.domain.RegistDTO;
 
 public interface MemberMapper {
@@ -10,5 +11,7 @@ public interface MemberMapper {
 	public int regist(RegistDTO vo);
 	
 	public int registAuth(RegistDTO vo);
+	
+	public String checkRegist(RegistCheckVO vo);
 
 }

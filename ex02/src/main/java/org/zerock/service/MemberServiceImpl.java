@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zerock.domain.RegistCheckVO;
 import org.zerock.domain.RegistDTO;
 import org.zerock.mapper.MemberMapper;
 
@@ -36,6 +37,15 @@ public class MemberServiceImpl implements MemberService{
 		
 		return insertResult;
 	}
-	
 
+	@Override
+	public String checkRegist(RegistCheckVO vo) {
+
+		log.info("check id or email and ? : " + vo);
+		
+		return mapper.checkRegist(vo) == null ? "true" : "false";
+	}
+	
+	
+	
 }

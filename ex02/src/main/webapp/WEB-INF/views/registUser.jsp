@@ -46,21 +46,25 @@
                                     <form class="user" role="form" method="post" action="/registUser">
                                     	<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }" />
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
+                                            <input type="text" class="form-control form-control-user registCheck"
                                                 name="userid" aria-describedby="emailHelp"
                                                 placeholder="Enter User ID...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
+                                            <input type="password" class="form-control form-control-user"
                                                 name="userpw" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                name="userpwConfirm" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 name="username"
-                                                placeholder="Enter User ID...">
+                                                placeholder="Enter User Name...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
+                                            <input type="email" class="form-control form-control-user registCheck"
                                                 name="email" placeholder="Enter User EMAIL...">
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block btn-regist">
@@ -91,7 +95,45 @@
     <script src="/resources/js/sb-admin-2.min.js"></script>
 
 	<script>
-	
+		
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+		
+		$(".registCheck").on("focusout", function(e){
+			
+			var name = e.target.name;
+			var text = e.target.value;
+			
+			$.ajax({
+				url: "/checkRegist",
+				type: "POST",
+				data: {'name' : name, 'text' : text},
+		        cache: false,
+				beforeSend: function(xhr){
+		       		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		        },
+				success: function(result){
+					var str = "";
+					if(result == "true"){
+						str += "등록가능한 ";
+						if(name == "userid"){
+							str += "아이디입니다";
+						}else if(name == "email"){
+							str += "이메일입니다";
+						}
+					}else{
+						str += "등록불가한 ";
+						if(name == "userid"){
+							str += "아이디입니다";
+						}else if(name == "email"){
+							str += "이메일입니다";
+						}
+					}
+					console.log(str);
+				}
+			});
+			
+		});
 	</script>
 </body>
 </html>

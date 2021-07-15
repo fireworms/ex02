@@ -37,4 +37,8 @@
 		values(#{userid}, 'ROLE_USER')
 	</insert>
 	
+	<select id="checkRegist" resultType="string">
+		select ${name} from tbl_member where ${name} = #{text}
+	</select>
+	
 </mapper>
