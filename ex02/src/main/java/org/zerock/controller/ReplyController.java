@@ -66,7 +66,7 @@ public class ReplyController {
 		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
 	}
 	
-	@PreAuthorize("principal.username == #vo.replyer")
+	@PreAuthorize("principal.username == #vo.replyer" + " || hasRole('ROLE_ADMIN')")
 	@DeleteMapping(value = "/{rno}")
 	public ResponseEntity<String> remove(@RequestBody ReplyVO vo, @PathVariable("rno") Long rno){
 		
@@ -77,7 +77,7 @@ public class ReplyController {
 		return service.remove(rno) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PreAuthorize("principal.username == #vo.replyer")
+	@PreAuthorize("principal.username == #vo.replyer" + " || hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value = "/{rno}", consumes = "application/json")
 	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("rno") Long rno){
 		

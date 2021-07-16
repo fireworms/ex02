@@ -12,6 +12,8 @@
 	</div>
 </div>
 
+<sec:authorize access="hasAnyRole('ROLE_ADMIN')" var="isAuthorizeAny"></sec:authorize>
+
 <div class="row">
 	<div class="col-lg-12">
 		<div class="card shadow mb-4">
@@ -32,14 +34,8 @@
 				<div class="form-group">
 					<label>Writer</label> <input class="form-control" name='writer' value='<c:out value="${board.writer }" />' readonly="readonly">
 				</div>
-				<sec:authentication property="principal" var="pinfo"/>
-					<sec:authorize access="isAuthenticated()">
-						<c:if test="${pinfo.username eq board.writer }">
-							<button data-oper='modify' class="btn btn-Light" >Modify</button>
-						</c:if>
-					</sec:authorize>
+					<button data-oper='modify' class="btn btn-Light d-none d-user" >Modify</button>
 				<button data-oper='list' class="btn btn-info" >List</button>
-				
 				<form id='operForm' action="/board/modify" method="get">
 					<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }" />' >
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }" />' >
@@ -51,6 +47,19 @@
 		</div>
 	</div>
 </div>
+
+<sec:authorize access="isAuthenticated()">
+	<c:if test="${pinfo.username eq board.writer }">
+		<script>
+			$(".d-user").removeClass("d-none");
+		</script>
+	</c:if>
+</sec:authorize>				
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<script>
+		$(".d-none").removeClass("d-none");
+	</script>
+</sec:authorize>
 
 <div class='bigPictureWrapper'>
 	<div class='bigPicture'>
@@ -432,7 +441,7 @@ $(document).ready(function(){
 		
 		console.log("Original Replyer: " + originalReplyer);
 		
-		if(replyer != originalReplyer){
+		if(replyer != originalReplyer && ${isAuthorizeAny} == false){
 			
 			alert("자신이 작성한 댓글만 수정이 가능합니다");
 			modal.modal("hide");
@@ -461,7 +470,7 @@ $(document).ready(function(){
 		
 		console.log("Original Replyer: " + originalReplyer);
 		
-		if(replyer != originalReplyer){
+		if(replyer != originalReplyer && ${isAuthorizeAny} == false){
 			
 			alert("자신이 작성한 댓글만 삭제가 가능합니다");
 			modal.modal("hide");

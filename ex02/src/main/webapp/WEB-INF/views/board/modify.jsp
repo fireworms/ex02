@@ -45,13 +45,8 @@
 					<div class="form-group" style="display : none">
 						<label>Update Date</label> <input class="form-control" name='updateDate' value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.updateDate }" />' readonly="readonly">
 					</div>
-					<sec:authentication property="principal" var="pinfo"/>
-					<sec:authorize access="isAuthenticated()">
-						<c:if test="${pinfo.username eq board.writer }">
-							<button type="submit" data-oper='modify' class="btn btn-light">Modify</button>
-							<button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
-						</c:if>
-					</sec:authorize>
+						<button type="submit" data-oper='modify' class="btn btn-light d-none d-user">Modify</button>
+						<button type="submit" data-oper='remove' class="btn btn-danger d-none d-user">Remove</button>
 					<button type="submit" data-oper='list' class="btn btn-info">List</button>
 				</form>
 			</div>
@@ -59,6 +54,18 @@
 	</div>
 </div>
 
+<sec:authorize access="isAuthenticated()">
+	<c:if test="${pinfo.username eq board.writer }">
+		<script>
+			$(".d-user").removeClass("d-none");
+		</script>
+	</c:if>
+</sec:authorize>				
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<script>
+		$(".d-none").removeClass("d-none");
+	</script>
+</sec:authorize>
 
 <div class='bigPictureWrapper'>
 	<div class='bigPicture'>
@@ -321,8 +328,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				$(".uploadResult ul li").each(function(i, obj){
 					
 					var jobj = $(obj);
-					//console.log(obj.getAttribute('data-filename'));
-					//console.log(jobj.data('filename'));
 					console.dir(jobj);
 					
 					str += "<input type='hidden' name='attachList[" + i + "].fileName' value='" + jobj.data('filename') + "'>";

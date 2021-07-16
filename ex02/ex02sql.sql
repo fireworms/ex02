@@ -15,6 +15,8 @@ insert into tbl_board (bno, title, content, writer) values (seq_board.nextval, '
 
 select * from tbl_board;
 
+select * from tbl_reply;
+
 select /*+ INDEX_ASC(tbl_board pk_board) */ * from tbl_board;
 
 create table tbl_reply(
@@ -109,7 +111,8 @@ create table tbl_member_auth(
 	userid varchar2(50) not null,
 	auth varchar2(50) not null
 );
-
+insert into tbl_member_auth values('qq', 'ROLE_ADMIN');
+select * from tbl_member_auth;
 alter table tbl_member_auth add constraint fk_member_auth foreign key (userid) references tbl_member(userid) on delete cascade;
 
 select * from tbl_member;
@@ -133,4 +136,4 @@ alter table tbl_member_auth drop constraint fk_member_auth;
 
 insert into tbl_member(userid, userpw, username, email) values('ad90', 'ad90', 'ad90', 'fireworms0@gmail.com');
 
-insert into tbl_member_auth(userid, auth) values('ad90', 'ROLE_ADMIN');
+insert into tbl_member_auth(userid, auth) values('qqq', 'ROLE_ADMIN');
