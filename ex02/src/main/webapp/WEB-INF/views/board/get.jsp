@@ -200,18 +200,13 @@
 
 $(".uploadResult").on("click","li",function(e){
 	
-	console.log("view image");
-	
 	var liObj = $(this);
-	//console.log(this);
 	var path = encodeURIComponent(liObj.data("path")+"/"+liObj.data("uuid")+"_"+liObj.data("filename"));
 	
 	if(liObj.data("type")){
 		showImage(path.replace(new RegExp(/\\/g),"/"));
-		//console.log("image");
 	}else{
 		self.location = "/download?fileName="+path;
-		//console.log("not image");
 	}
 });
 
@@ -238,7 +233,6 @@ $(document).ready(function(){
 		var bno = '<c:out value="${board.bno}"/>';
 		
 		$.getJSON("/board/getAttachList", {bno: bno}, function(arr){
-			console.log(arr);
 			
 			var str = "";
 			
@@ -273,17 +267,10 @@ $(document).ready(function(){
 	
 	function showList(page){
 		
-		console.log("show list " + page);
-		
 		replyService.getList({bno:bnoValue,page: page|| 1}, function(replyCnt, list){
-			
-			console.log("replyCnt: " + replyCnt);
-			console.log("list: " + list);
-			console.log(list);
 			
 			if(page == -1){
 				pageNum = Math.ceil(replyCnt/10.0);
-				console.log("pageNum : " + pageNum);
 				showList(pageNum);
 				return;
 			}
@@ -345,7 +332,6 @@ $(document).ready(function(){
 		
 		str+= "</ul></div>";
 		
-		console.log(str);
 		
 		replyPageFooter.html(str);
 	}
@@ -439,8 +425,6 @@ $(document).ready(function(){
 			modal.modal("hide");
 		}
 		
-		console.log("Original Replyer: " + originalReplyer);
-		
 		if(replyer != originalReplyer && ${isAuthorizeAny} == false){
 			
 			alert("자신이 작성한 댓글만 수정이 가능합니다");
@@ -468,8 +452,6 @@ $(document).ready(function(){
 		
 		var originalReplyer = modalInputReplyer.val();
 		
-		console.log("Original Replyer: " + originalReplyer);
-		
 		if(replyer != originalReplyer && ${isAuthorizeAny} == false){
 			
 			alert("자신이 작성한 댓글만 삭제가 가능합니다");
@@ -489,11 +471,8 @@ $(document).ready(function(){
 	replyPageFooter.on("click", "li a", function(e){
 		
 		e.preventDefault();
-		console.log("page click");
 		
 		var targetPageNum = $(this).attr("href");
-		
-		console.log("targetPageNum: " + targetPageNum);
 		
 		pageNum = targetPageNum;
 		
@@ -504,7 +483,7 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log(replyService);
+		
 		var operForm = $("#operForm");
 		
 		$("button[data-oper='modify']").on("click", function(e){

@@ -152,8 +152,6 @@
 			
 			var cloneObj = $(".uploadDiv").clone();
 			
-			console.log(cloneObj);
-			
 			$("#uploadBtn").on("click", function(e){
 				
 				var formData = new FormData();
@@ -162,8 +160,6 @@
 				
 				var files = inputFile[0].files;
 				
-				console.log(files);
-				
 				for(var i = 0; i < files.length; i++){
 					
 					if(!checkExtension(files[i].name, files[i].size)){
@@ -171,7 +167,7 @@
 					}
 					formData.append("uploadFile", files[i]);
 				}
-				console.log(formData);
+				
 				$.ajax({
 					url: './uploadAjaxAction',
 					processData: false,
@@ -180,7 +176,6 @@
 					type: 'POST',
 					dataType: 'json',
 					success: function(result){
-						console.log(result);
 						
 						showUploadedFile(result);
 						
@@ -195,7 +190,6 @@
 			
 			var targetFile = $(this).data("file");
 			var type = $(this).data("type");
-			console.log(targetFile);
 			
 			$.ajax({
 				url: './deleteFile',

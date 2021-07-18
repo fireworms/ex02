@@ -5,11 +5,12 @@ import java.util.stream.IntStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springboard.domain.Criteria;
+import org.springboard.domain.ReplyVO;
+import org.springboard.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.zerock.domain.Criteria;
-import org.zerock.domain.ReplyVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

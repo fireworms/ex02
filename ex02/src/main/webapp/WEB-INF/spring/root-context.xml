@@ -23,8 +23,8 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
-	<mybatis-spring:scan base-package="org.zerock.mapper" />
-	<context:component-scan base-package="org.zerock.service"></context:component-scan>
-	<context:component-scan base-package="org.zerock.task"></context:component-scan>
+	<mybatis-spring:scan base-package="org.springboard.mapper" />
+	<context:component-scan base-package="org.springboard.service"></context:component-scan>
+	<context:component-scan base-package="org.springboard.task"></context:component-scan>
 	<task:annotation-driven/>
 </beans>

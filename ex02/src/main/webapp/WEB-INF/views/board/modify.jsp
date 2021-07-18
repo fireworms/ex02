@@ -196,8 +196,6 @@ function showUploadResult(uploadResultArr){
 			
 			$.getJSON("/board/getAttachList", {bno: bno}, function(arr){
 				
-				console.log(arr);
-				
 				var str = "";
 				
 				$(arr).each(function(i, attach){
@@ -205,7 +203,6 @@ function showUploadResult(uploadResultArr){
 					if(attach.fileType){
 						
 						var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName);
-						console.log(fileCallPath);
 						
 						str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'>";
 						str += "<div>";
@@ -259,8 +256,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 			
 			var files = inputFile[0].files;
 			
-			console.log(files);
-			
 			for(var i = 0; i < files.length; i++){
 				
 				if(!checkExtension(files[i].name, files[i].size)){
@@ -268,8 +263,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				}
 				formData.append("uploadFile", files[i]);
 			}
-			
-			console.log(formData);
 			
 			$.ajax({
 				url: "/uploadAjaxAction",
@@ -283,7 +276,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 		        	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		        },
 				success: function(result){
-					console.log(result);
 					showUploadResult(result);
 				}
 			});
@@ -296,8 +288,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 			e.preventDefault();
 			
 			var operation = $(this).data("oper");
-			
-			console.log(operation);
 			
 			if(operation === 'remove'){
 				
@@ -321,8 +311,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 				
 			}else if(operation === 'modify'){
 				
-				console.log("modify clicked");
-				
 				var str = "";
 				
 				$(".uploadResult ul li").each(function(i, obj){
@@ -343,8 +331,6 @@ var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	});
 	
 	$(".uploadResult").on("click", "button", function(e){
-		
-		console.log("delete file");
 		
 		if(confirm("Remove this file? " )){
 			

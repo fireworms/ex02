@@ -161,8 +161,6 @@
 			
 			e.preventDefault();
 			
-			console.log("submit clicked");
-			
 			var str = "";
 			
 			$(".uploadResult ul li").each(function(i, obj){
@@ -228,7 +226,6 @@
 		        	xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 		        },
 				success: function(result){
-					console.log(result);
 					showUploadResult(result);
 				}
 			});
@@ -239,8 +236,6 @@
 		
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
-		
-		console.log("delete file");
 		
 		var targetFile = $(this).data("file");
 		var type = $(this).data("type");
