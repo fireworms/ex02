@@ -21,9 +21,7 @@
 				<h6 class="m-0 font-weight-bold text-primary">Board Read Page</h6>
 			</div>
 			<div class="card-body">
-				<div class="form-group">
-					<label>Bno</label> <input class="form-control" name='bno' value='<c:out value="${board.bno }"/>' readonly="readonly">
-				</div>
+					<input type='hidden' class="form-control" name='bno' value='<c:out value="${board.bno }"/>' readonly="readonly">
 				<div class="form-group">
 					<label>Title</label> <input class="form-control" name='title' value='<c:out value="${board.title }" />' readonly="readonly">
 				</div>
@@ -179,7 +177,7 @@
 				</div>
 				<div class="form-group">
 					<label>Replyer</label>
-					<input class="form-control" name='replyer' value='replyer'>
+					<input class="form-control" name='replyer' value='replyer' readonly='readonly'>
 				</div>
 				<div class="form-group">
 					<label>Date</label>
@@ -360,7 +358,7 @@ $(document).ready(function(){
 	$("#addReplyBtn").on("click", function(e){
 		
 		modal.find("input").val("");
-		modal.find("input[name='replyer']").val(replyer).attr('readonly', true);
+		modalInputReplyer.val(replyer);
 		modalInputReplyDate.closest("div").hide();
 		modal.find("button[id !='modalCloseBtn']").hide();
 		
@@ -403,6 +401,7 @@ $(document).ready(function(){
 			modalInputReply.val(reply.reply);
 			modalInputReplyer.val(reply.replyer);
 			modalInputReplyDate.val(replyService.displayTime(reply.replyDate)).attr("readonly","readonly");
+			modalInputReplyDate.closest("div").show();
 			modal.data("rno", reply.rno);
 			
 			modal.find("button[id !='modalCloseBtn']").hide();

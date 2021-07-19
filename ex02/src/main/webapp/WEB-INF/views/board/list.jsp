@@ -132,79 +132,56 @@
 								완료되었습니다</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<script type="text/javascript">
-					$(document)
-							.ready(
-									function() {
-										var result = '<c:out value="${result}"/>';
+					$(document).ready(function() {
+						
+						var result = '<c:out value="${result}"/>';
 
-										checkModal(result);
+						checkModal(result);
 
-										history.replaceState("asd", null, null);
+						history.replaceState("asd", null, null);
 
-										function checkModal(result) {
-											if (result === '' || history.state) {
-												return;
-											}
+						function checkModal(result) {
+							if (result === '' || history.state) {
+								return;
+							}
 
-											if (parseInt(result) > 0) {
-												//$(".registerMessage").html("게시글 " + parseInt(result) + " 번이 등록되었습니다");
-												document.getElementById("aaa").innerText = ("게시글 "
-														+ parseInt(result) + " 번이 등록되었습니다");
-											}
-											$("#myModal").modal("show");
+							if (parseInt(result) > 0) {
+								//$(".registerMessage").html("게시글 " + parseInt(result) + " 번이 등록되었습니다");
+								document.getElementById("aaa").innerText = ("게시글 "
+										+ parseInt(result) + " 번이 등록되었습니다");
+							}
+							$("#myModal").modal("show");
 
-										}
+						}
 
-										$("#regBtn").on("click", function() {
-											self.location = "/board/register";
-										});
+						$("#regBtn").on("click", function() {
+							self.location = "/board/register";
+						});
 
-										var actionForm = $("#actionForm");
+						var actionForm = $("#actionForm");
 
-										$(".page-item a")
-												.on(
-														"click",
-														function(e) {
-															e.preventDefault();
-															console
-																	.log('click');
-															actionForm
-																	.find(
-																			"input[name='pageNum']")
-																	.val(
-																			$(
-																					this)
-																					.attr(
-																							"href"));
-															actionForm.submit();
-														});
+						$(".page-item a").on("click",function(e) {
+							
+								e.preventDefault();
+								
+								actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+								actionForm.submit();
+							});
 
-										$(".move")
-												.on(
-														"click",
-														function(e) {
-															e.preventDefault();
-															actionForm
-																	.append("<input type='hidden' name='bno' value='"
-																			+ $(
-																					this)
-																					.attr(
-																							"href")
-																			+ "'>");
-															actionForm
-																	.attr(
-																			"action",
-																			"/board/get");
-															actionForm.submit();
-														});
-									});
+						$(".move").on("click",function(e) {
+							
+							e.preventDefault();
+							actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+							actionForm.attr("action", "/board/get");
+							actionForm.submit();
+							
+						});
+					});
 
 					var searchForm = $("#searchForm");
 					$("#searchForm button").on("click", function(e) {
