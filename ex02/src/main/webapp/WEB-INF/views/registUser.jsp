@@ -109,7 +109,7 @@
 		
 		e.preventDefault();
 		
-		document.referrer&&-1!=document.referrer.indexOf("localhost")?history.back():location.href="http://localhost:8090/board/list";
+		document.referrer && -1 != document.referrer.indexOf("localhost") ? location.replace(document.referrer) : location.href="http://localhost:8090/board/list";
 	});
 	
 	$("input[name='userpwConfirm']").on("focusout", function(e){
