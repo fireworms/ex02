@@ -6,9 +6,8 @@
 
 	<insert id="insert">
 
-		insert into tbl_reply (rno, bno, reply, replyer)
-		values (seq_reply.nextval,
-		#{bno}, #{reply}, #{replyer})
+		insert into tbl_reply (bno, reply, replyer)
+		values ( #{bno}, #{reply}, #{replyer})
 
 	</insert>
 
@@ -26,7 +25,7 @@
 	
 	<update id="update">
 
-		update tbl_reply set reply = #{reply}, updatedate = sysdate where rno =
+		update tbl_reply set reply = #{reply}, updatedate = current_timestamp() where rno =
 		#{rno}
 
 	</update>
@@ -35,17 +34,22 @@
 		resultType="org.springboard.domain.ReplyVO">
 		
 		<![CDATA[
-		select rno, bno, reply, replyer, replyDate, updatedate
+		select sub1.rno, sub1.bno, sub1.reply, sub1.replyer, sub1.replyDate, sub1.updatedate
 		from
 		(
-			select /*+INDEX(tbl_reply idx_reply) */
-				rownum rn, bno, rno, reply, replyer, replyDate, updatedate
-			from tbl_reply
-			where bno = #{bno}
-			and rno > 0
-			and rownum <= #{cri.pageNum} * #{cri.amount}
-		)
-		where rn > (#{cri.pageNum} -1) * #{cri.amount}
+			select 
+				sub2.rn, sub2.bno, sub2.rno, sub2.reply, sub2.replyer, sub2.replyDate, sub2.updatedate
+			from (
+				select
+					ROW_NUMBER() OVER (order by rno desc) as rn, bno, rno, reply, replyer, replyDate, updatedate
+				from
+					tbl_reply
+					where bno = #{bno}
+				) sub2
+			where sub2.rno > 0
+			and sub2.rn <= #{cri.pageNum} * #{cri.amount}
+		) sub1
+		where sub1.rn > (#{cri.pageNum} -1) * #{cri.amount}
 		]]>
 	</select>
 	

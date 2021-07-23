@@ -12,9 +12,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mariadb://127.0.0.1:3306/spring_board_db?useSSL=false&amp;serverTimezone=Asia/Seoul"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="Rlarkqtn1@"></property>
+		<property name="jdbcUrl" value="jdbc:mariadb://maria.cl4zxtzd4vn0.ap-northeast-2.rds.amazonaws.com:3306/maria?useSSL=false&amp;serverTimezone=Asia/Seoul"></property>
+		<property name="username" value="fireworms"></property>
+		<property name="password" value="rlarkqtn2"></property>
 	</bean>
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
