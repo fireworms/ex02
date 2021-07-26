@@ -51,13 +51,13 @@
 		</div>
 	</div>
 </div>
-
+<sec:authentication property="principal" var="pinfo" />
 <sec:authorize access="isAuthenticated()">
-	<c:if test="${pinfo.username eq board.writer }">
-		<script>
-			$(".d-user").removeClass("d-none");
-		</script>
-	</c:if>
+	<script>
+		<c:if test="${pinfo.username eq board.writer }">
+		$(".d-user").removeClass("d-none");
+		</c:if>
+	</script>
 </sec:authorize>				
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<script>

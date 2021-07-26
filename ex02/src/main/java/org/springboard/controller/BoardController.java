@@ -86,7 +86,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@PreAuthorize("principal.username == #writer || " + "hasRole('ROLE_ADMIN')")
+	@PreAuthorize("principal.username == #board.writer || " + "hasRole('ROLE_ADMIN')")
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify : " + board);
@@ -99,7 +99,7 @@ public class BoardController {
 	}
 	
 	@Transactional
-	@PreAuthorize("principal.username == #writer || " + "hasRole('ROLE_ADMIN')")
+	@PreAuthorize("principal.username == #board.writer || " + "hasRole('ROLE_ADMIN')")
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
 		log.info("remove......." + bno);

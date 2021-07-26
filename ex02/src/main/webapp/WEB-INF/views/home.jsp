@@ -6,7 +6,7 @@
 </head>
 <body>
 <script>
-	self.location='/board/list';
+	self.location='./board/list';
 </script>
 </body>
 </html>

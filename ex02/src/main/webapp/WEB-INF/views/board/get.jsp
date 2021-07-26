@@ -13,6 +13,7 @@
 </div>
 
 <sec:authorize access="hasAnyRole('ROLE_ADMIN')" var="isAuthorizeAny"></sec:authorize>
+<sec:authentication property="principal" var="pinfo" />
 
 <div class="row">
 	<div class="col-lg-12">
@@ -47,15 +48,18 @@
 </div>
 
 <sec:authorize access="isAuthenticated()">
-	<c:if test="${pinfo.username eq board.writer }">
-		<script>
-			$(".d-user").removeClass("d-none");
-		</script>
-	</c:if>
+	<script>
+		<c:if test="${pinfo.username eq board.writer }">
+		$(".d-user").removeClass("d-none");
+		</c:if>
+	</script>
 </sec:authorize>				
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<script>
+	$(document).ready(function(){
 		$(".d-none").removeClass("d-none");
+		alert("어드민이여");
+	});
 	</script>
 </sec:authorize>
 

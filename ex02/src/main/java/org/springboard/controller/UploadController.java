@@ -65,7 +65,7 @@ public class UploadController {
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		
 		List<AttachFileDTO> list = new ArrayList<>();
-		String uploadFolder = "C:\\upload";
+		String uploadFolder = "/var/lib/tomcat8/webapps/upload";
 		
 		log.info(uploadFile);
 		
@@ -127,7 +127,7 @@ public class UploadController {
 		
 		log.info("fileName : " + fileName);
 		
-		File file = new File("c:\\upload\\" + fileName);
+		File file = new File("/var/lib/tomcat8/webapps/upload/" + fileName);
 		
 		log.info("file : " + file);
 		
@@ -148,7 +148,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
 		
-		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		Resource resource = new FileSystemResource("/var/lib/tomcat8/webapps/upload/" + fileName);
 		
 		if(!resource.exists()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -201,7 +201,7 @@ public class UploadController {
 		File file;
 		
 		try {
-			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File("/var/lib/tomcat8/webapps/upload/" + URLDecoder.decode(fileName, "UTF-8"));
 			
 			file.delete();
 			
