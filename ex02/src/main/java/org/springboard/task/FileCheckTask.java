@@ -45,16 +45,16 @@ public class FileCheckTask {
 		
 		List<BoardAttachVO> fileList = attachMapper.getOldFiles();
 		
-		List<Path> fileListPaths = fileList.stream().map(vo -> Paths.get("C:\\upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName())).collect(Collectors.toList());
+		List<Path> fileListPaths = fileList.stream().map(vo -> Paths.get("/var/lib/tomcat8/webapps/upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName())).collect(Collectors.toList());
 		
-		fileList.stream().filter(vo -> vo.isFileType() == true).map(vo -> Paths.get("C:\\upload", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName())).forEach(p -> fileListPaths.add(p));
+		fileList.stream().filter(vo -> vo.isFileType() == true).map(vo -> Paths.get("/var/lib/tomcat8/webapps/upload", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName())).forEach(p -> fileListPaths.add(p));
 		
 		log.warn("======================================");
 		
 		fileListPaths.forEach(p -> log.warn(p));
 		
 		//여기서 전날의 첨부파일들이 들어있는 폴더명을 구함
-		File targetDir = Paths.get("C:\\upload", getFolderYesterDay()).toFile();
+		File targetDir = Paths.get("/var/lib/tomcat8/webapps/upload", getFolderYesterDay()).toFile();
 		// 여기서 데이터베이스에서 가져온 객체를 List<Path> 형식으로 변환한 경로데이터와 targetDir.listFiles메소드로 반환한 
 		File[] removeFiles = targetDir.listFiles(file -> fileListPaths.contains(file.toPath()) == false);
 		
