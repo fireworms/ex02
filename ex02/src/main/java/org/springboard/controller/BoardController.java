@@ -99,7 +99,7 @@ public class BoardController {
 	}
 	
 	@Transactional
-	@PreAuthorize("principal.username == #board.writer || " + "hasRole('ROLE_ADMIN')")
+	@PreAuthorize("principal.username == #writer || " + "hasRole('ROLE_ADMIN')")
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr, String writer) {
 		log.info("remove......." + bno);
