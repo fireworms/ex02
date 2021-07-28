@@ -162,7 +162,6 @@ function loginMenu(){
 		$.ajax({
 			url: "/customLogout",
 	        type: "POST",
-	        //dataType: 'json',
 	        data: formLogout,
 	        contentType: false,
 	        processData: false,
