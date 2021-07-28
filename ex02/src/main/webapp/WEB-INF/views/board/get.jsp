@@ -368,12 +368,6 @@ $(document).ready(function(){
 		$(".modal").modal("show");
 	});
 	
-	$(document).ajaxSend(function(e, xhr, options){
-		
-		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		
-	});
-	
 	modalRegisterBtn.on("click", function(e){
 		
 		var reply = {

@@ -136,6 +136,12 @@ function loginMenu(){
 
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
+	
+	$(document).ajaxSend(function(e, xhr, options){
+		
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		
+	});
 
 	$(document).ready(function (){
 		
