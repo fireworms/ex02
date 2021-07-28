@@ -356,9 +356,6 @@ $(document).ready(function(){
 	
 	</sec:authorize>
 	
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
-	
 	$("#addReplyBtn").on("click", function(e){
 		
 		modal.find("input").val("");

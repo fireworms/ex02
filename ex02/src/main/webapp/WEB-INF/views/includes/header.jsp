@@ -133,7 +133,10 @@ function loginMenu(){
 	}
 	
 }
-	
+
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+
 	$(document).ready(function (){
 		
 		loginMenu();
